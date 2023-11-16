@@ -21,9 +21,29 @@ public class Server {
                         PrintWriter out = new PrintWriter(clientSocket.getOutputStream(),true);
                         BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
                 ) {
-                    System.out.println("New connection accepted");
-                    final String name = in.readLine();
-                    out.println(String.format("Hi %s, your port is %d", name, clientSocket.getPort()));
+                    System.out.println("New connection accepted. " + clientSocket.getPort());
+
+                    out.println("Write your name");
+                    String name = in.readLine();
+
+                    out.println("Are you child? (yes/no)");
+                    String response = in.readLine();
+
+                    switch (response) {
+                        case "no": {
+                            out.printf("Welcome to the adult zone, %s! Have a good rest, or a good working day!", name);
+                            break;
+                        }
+                        case "yes": {
+                            out.printf("Welcome to the kids area, %s! Let's play!", name);
+                            break;
+                        }
+                        default: {
+                            out.printf("Your response not valid. Welcome to the kids area, %s! Let's play!", name);
+                            break;
+                        }
+                    }
+
                 }
             }
         } catch (IOException e) {
